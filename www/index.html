@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/pickadate.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">b
+    <link rel="stylesheet" href="http://css-spinners.com/css/spinner/atebits.css" type="text/css">
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+    <script src="js/jquery.min.js"></script>
+
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+    <script src="analytics.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/angular-local-storage.js"></script>
+    <script src="js/angular-pickadate.js"></script>
+    <script src="js/i18n/angular-local-zh_tw.js"></script>
+    <script src="js/macho.js"></script>
+
+    <script>
+
+    
+    document.addEventListener("deviceready", onDeviceReady, false);
+        // PhoneGap is loaded and it is now safe to make calls PhoneGap methods
+        //
+        function onDeviceReady() {
+            analytics.startTrackerWithId('UA-46334408-2');
+            analytics.trackView("Login");
+            analytics.trackView("Course");
+            analytics.trackView("Score");
+            analytics.trackView("Leave");
+            analytics.trackView("About Us");
+            analytics.trackView("Bus");
+            analytics.trackView("最新消息");
+            analytics.trackView("常用電話");
+            analytics.trackView("行事曆");
+
+
+            document.addEventListener("backbutton", function () {
+                window.history.go(-1);
+            });
+        }
+        
+
+    </script>
+  </head>
+
+  <body ng-app="starter">
+    <ion-nav-view ng-controller="AppCtrl"></ion-nav-view>
+  </body>
+</html>

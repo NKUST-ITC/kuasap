@@ -1,0 +1,51 @@
+<ion-view title="Login" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a class="button" href="#/app/login">
+      <i class="icon ion-gear-b"></i>
+    </a>
+  </ion-nav-buttons>
+  <ion-content class="has-header" ng-controller="AuthCtrl">
+  <div ng-show="main.is_login">
+    <div class="page-wrapper" style="margin-bottom:-30px">
+      <img src="img/black_cat.png" style="width: 250px;padding-left: 20px;"></img>
+      <p>成功登入高應大校務系統</p>
+      <p>滑動左側選單，開始瀏覽</p>
+      <button class="button button-positive" ng-click="logout()">
+      Logout
+      </button>
+    </div>
+  </div>
+  <div class="page-wrapper" ng-init="checkBackupOnline();checkFixed();checkLogin();forceUpdate();">
+    <div class="login-input"  ng-show="!main.is_login">
+        <h1>KUAS AP</h1>
+        <div>
+          <label class="item item-input">
+            <input type="text" ng-model="username" placeholder="Username">
+          </label>
+          <label class="item item-input form-wrapper">
+            <input type="password" ng-model="password" placeholder="Password">
+          </label>
+          <button class="button button-positive" ng-click="login()">
+            登入系統
+          </button>
+
+        </div>
+    </div>
+  <div>
+  <div class="remember" ng-show="!main.is_login">
+    <div class="remember-password">
+      <input type="checkbox" style="vertical-align: middle" ng-model="remember_password">
+      <span ng-click="triggleRememberPassword()" style="vertical-align: middle">記住密碼</span>
+    </div>
+    <span class="version">v.{{ version }}</span>
+
+  <div>
+
+  <div class="page-wrapper" style="width:70%">
+    {{ is_fixed }}
+  </div>
+  </ion-content>
+</ion-view>

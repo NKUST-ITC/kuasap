@@ -1,0 +1,66 @@
+<ion-view title="Score" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a class="button" href="#/app/login">
+      <i class="icon ion-gear-b"></i>
+    </a>
+  </ion-nav-buttons>
+
+  <ion-content class="has-header" ng-controller="AuthCtrl" ng-init="changeArgs('102', '02');score()">
+
+    <div ng-show="prepare">
+        <div class="spinner" ng-show="loading">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
+        </div>
+        <div class="ion-alert-circled" ng-show="network_error"></div>
+        <div class="page-wrapper">
+          {{ quote }}
+        </div>
+    </div>
+
+    <div ng-controller="ScoreCtrl" ng-show="!prepare">
+        <div class="page-wrapper">
+        <div style="text-align:center;margin-bottom:-20px;">
+          <div class="buttons">
+            <button class="button icon-right ion-ios7-arrow-down button-clear button-dark" ng-init="$rootScope.arg01='102';$rootScope.arg02='02';" ng-click="openModal('score')">{{modalData.score_msg}}</button>
+          </div>
+        </div>
+
+        <div ng-show="content[2]">
+          <table class="score-table">
+            <tr>
+              <td>{{ content[2] }}</td>
+            </tr>
+          </table>
+        </div>
+        
+        <div ng-show="!content[2]">
+          <table class="score-table">
+            <tr>
+              <td class="score-td-course">科目</td>
+              <td class="score-td">期中成績</td>
+              <td class="score-td">學期成績</td>
+            </tr>
+
+            <tr ng-repeat="r in content[0]">
+              <td class="score-td-course">{{ r["course_name"] }}</td>
+              <td class="score-td">{{ r["middle_score"] }}</td>
+              <td class="score-td">{{ r["final_score"] }}</td>
+            </tr>
+          </table>
+          <table class="score-table">
+            <tr ng-repeat="r in content[1]">
+                <td class="score-td"> {{ r }} </td>
+            </tr>
+          </table>
+          </div>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

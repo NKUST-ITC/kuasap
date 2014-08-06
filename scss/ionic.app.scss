@@ -1,0 +1,435 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #4a87ee !default;
+$calm:                            #43cee6 !default;
+$balanced:                        #66cc33 !default;
+$energized:                       #f0b840 !default;
+$assertive:                       #ef4e3a !default;
+$royal:                           #8a6de9 !default;
+$dark:                            #444 !default;
+*/
+
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic.scss";
+
+// Include google fonts
+//@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700italic);
+
+
+@font-face {
+    font-family: "open sans";
+    src: url(../fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: "open sans";
+    src: url(../fonts/OpenSans-Bold.ttf);
+    font-weight: bold;
+}
+
+
+.alert-dialog {
+    text-align: center;
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+blockquote p {
+  display: inline;
+}
+  
+
+.author {
+  text-align: center;
+  margin-top: -30px;
+}
+
+.author span {
+  font-family: "open sans";
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.author p {
+  font-family: "open sans";
+}
+
+.contact {
+  text-align: center;
+}
+
+.contact span {
+  font-family: "open sans";
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.contact a {
+  text-decoration: none;
+  color: #161718;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.contact a:visited {
+  color: #161718;
+}
+
+.contact a:hover {
+  color: #916A70;
+}
+
+.contact i {
+  -webkit-transition: color 0.2s ease-out;
+  -moz-transition: color 0.2s ease-out;
+  transition: color 0.2s ease-out;
+}
+
+.login-input {
+    margin: 0px auto;
+    width: 60%;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.login-input button {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+
+.remember {
+  margin: 0px auto;
+  width: 60%;
+  font-family: "open sans";
+  line-height: 10px;
+  display: table;
+} 
+
+.remember-password {
+  float: left;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.version {
+  vertical-align: middle;
+  float: right;
+  padding-top: 2px;
+  font-size: 1.05em;
+}
+
+.page-wrapper {
+    margin: 0px auto;
+    width: 100%;
+    text-align: center;
+    padding-top: 3%;
+
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+
+.page-quote {
+/*Apply this class to some text to unlock the secrets of the third dimension!*/
+font-family: Garamond, serif;
+font-size: 20px;
+text-shadow: 4px 4px 4px rgba(150, 150, 150, 1);
+}
+
+.leave-table {
+    @extend .score-table;
+
+    width: 90%;
+}
+
+.leave-table td {
+    width: 40px;
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: nowrap;
+}
+
+.leave-table .leave-date {
+    width: 20px;
+}
+
+@media screen and (max-width: 479px) {
+    .leave-table td {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .leave-table .leave-date {
+        overflow: hidden;
+        white-space: nowrap;
+        display: block;
+        direction: rtl;
+        padding-right: 3px;
+        width: 40px;
+    }
+}
+
+.score-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid #CCC;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+
+    margin: 0px auto;
+    margin-top: 20px;
+
+    width: 90%;
+}
+
+.score-table th {
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid #CCC;
+}
+
+.score-table td {
+    text-align: center;
+    vertical-align: middle;
+    border-top: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    color: #669;
+}
+
+.score-table .score-td-course {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.score-table .score-td {
+    text-align: center;
+    vertical-align: middle;
+    border-top: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    color: #669;
+    width: 60px;
+}
+
+
+.course-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid #CCC;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+
+    margin: 0px auto;
+    margin-top: 20px;
+
+    width: 90%;
+}
+
+.course-table button {
+    @extend .button-light;
+    border: 0px;
+    width: 100%;
+}
+
+.course-table th {
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid #CCC;
+}
+
+.course-table td {
+    text-align: center;
+    vertical-align: middle;
+    border-top: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    color: #669;
+    white-space: nowrap;
+    height: 40px;
+    width: 40px;
+}
+
+
+.course-prompt-saturday, .course-prompt-sunday {
+  margin-bottom: -13px;
+}
+
+@media screen and (max-width: 380px) {
+  .course-table-saturday {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 380px) {
+  .course-prompt-saturday {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .course-table-sunday {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 430px) {
+  .course-prompt-sunday {
+    display: none;
+  }
+}
+
+.bus-table p {
+  font-size: 2em;
+}
+.bus-table span {
+  position: absolute;
+  bottom: 0.25em;
+  font-size: 0.5em;
+  margin-left: 0.5em;
+}
+
+.bus-table button {
+  white-space:nowrap;
+}
+
+.bus-choice {
+  overflow: hidden;
+}
+
+.bus-choice .button-left {
+  float:left;
+  width: 50%;
+  white-space: nowrap;
+  height: 4em;
+
+}
+
+.bus-choice .button-right {
+  width: 50%;
+  white-space: nowrap;
+  height: 4em;
+}
+
+.event-phones {
+
+}
+
+.phone-title {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.phone-number {
+  font-size: 1.2em;
+  padding-top: 5px;
+  margin-bottom: -5px;
+  font-family: "open sans";
+}
+
+.event-article {
+  //border-bottom-width: 2px;
+  //border-bottom-style: solid;
+  //border-bottom-color: #000;
+
+  width: 90%;
+  height: 150px;
+  margin-top: -5px;
+}
+
+.news{
+  white-space: normal;
+}
+
+.news-title {
+  font-weight: 700;
+}
+
+.news-sub {
+  padding-top: 5px;
+  margin-bottom: -10px;
+  color: #939393;
+}
+
+.news-page {
+  font-family: "open sans";
+}
+
+
+/* Loader CSS */
+/* http://tobiasahlin.com/spinkit/ */
+
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #333;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes stretchdelay {
+  0%, 40%, 100% { 
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% { 
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}

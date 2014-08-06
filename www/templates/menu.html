@@ -1,0 +1,43 @@
+<ion-side-menus>
+
+  <ion-pane ion-side-menu-content>
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+      <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+  </ion-pane>
+
+  <ion-side-menu side="left" width="170">
+    <header class="bar bar-header bar-stable">
+      <h1 class="title">KUAS AP</h1>
+    </header>
+    <ion-content class="has-header" >
+      <ion-list>
+        <ion-item nav-clear menu-close href="#/app/ap/course">
+          學期課表
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/ap/score">
+          學期成績
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/leave">
+          缺曠查詢
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/bus">
+          預約校車
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/events">
+          校園資訊
+        </ion-item>
+      </ion-list>
+    </ion-content>
+    <div class="bar bar-footer" style="height:60px;">
+      <ion-content>
+        <ion-list>
+          <ion-item nav-clear menu-close style="padding-bottom:20px" href="#/app/about">
+            關於我們 <i class="fa fa-thumbs-o-up fa-2x"></i>
+          </ion-item>
+        </ion-list>
+      <ion-content>
+    </div>
+  </ion-side-menu>
+</ion-side-menus>

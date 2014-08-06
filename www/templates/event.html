@@ -1,0 +1,83 @@
+<ion-view title='{{ title }}' hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a class="button" href="#/app/login">
+      <i class="icon ion-gear-b"></i>
+    </a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top">
+      <ion-tab title="最新消息" icon="fa fa-exclamation" on-select="notification()">
+          <ion-content has-header="true">
+            <div class="page-wrapper" ng-show="loading">
+              <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+              </div>
+              <div class="page-wrapper">
+                {{ quote }}
+              </div>
+            </div>
+            <div id="top" class="news-page" ng-show="!loading">
+              <ion-list class="news">
+                <ion-item ng-repeat="p in news" ng-click="to_link('{{ p.link }}')">
+                  <div class="news">
+                    <div class="news-title">
+                      {{ p.info[1] }}
+                    </div>
+                    <div class="news-sub">
+                      <span style="float:left">{{ p.info[2] }}</span>
+                      <span style="float:right">{{ p.info[0] }}</span>
+                    </div>
+                  </div>
+                </ion-item>
+                <ion-item>
+                </ion-item>
+              </ion-list>
+              <div class="bar bar-footer">
+                <button class="button button-clear" style="font-weight:700;color:#373737" ng-click="change_page(-1)">上一頁</button>
+                <div class="title">第{{ page }}頁</div>
+                <button class="button button-clear" style="font-weight:700;color:#373737" ng-click="change_page(1)">下一頁</button>
+              </div>
+            </div>
+          </ion-content>
+      </ion-tab>
+
+      <ion-tab title="常用電話" icon="fa fa-phone" on-select="change_title('常用電話')">
+          <ion-content has-header="true">
+            <ion-list>
+              <ion-item ng-repeat="p in phones" ng-click="dial(p)">
+                <div class="event-phones">
+                  <div class="phone-title">
+                    {{ p.title }}
+                  </div>
+                  <div class="phone-number">
+                    {{ p.number }}
+                  </div>
+                </div>
+              </ion-item>
+          </ion-content>
+      </ion-tab>
+
+      <ion-tab title="行事曆" icon="fa fa-calendar-o" on-select="change_title('行事曆')">
+          <ion-content has-header="true">
+            <ion-list ng-repeat="week in schedules">
+              <ion-item class="item-divider">
+                {{ week.week }}
+              </ion-item>
+              <ion-item ng-repeat="s in week.events">
+                {{ s }}
+              </ion-item>
+            </ion-list>
+
+          </ion-content>
+      </ion-tab>
+  </ion-tabs>
+</ion-view>
+
+
