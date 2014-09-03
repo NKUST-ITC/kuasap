@@ -4,9 +4,9 @@ var backup_sever = "";
 //api_server = "http://192.168.0.193:5000/";
 //api_server = "http://kuas.grd.idv.tw:14765/";
 api_server = "http://kuas.grd.idv.tw:14768/";
-//backup_server = "http://api.grd.idv.tw:14768/";
+backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.3.5 testing login";
+android_version = "1.3.6";
 ios_version = "1.3.2";
 
 relogin_quote = "請點選右上方齒輪重新登入";
@@ -39,8 +39,11 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 .controller('AppCtrl', function($scope, $rootScope, $window, $ionicModal) {
     $scope.main = {
         is_login: false,
-        func: ""
+        func: "",
+        server_status: [false, 400, 400]
     };
+
+
 
     $scope.score_select = [{'text': '103學年度第1學期', 'value': '103,1'}, {'text': '102學年度第1學期', 'value': '102,1'}, {'text': '102學年度第2學期', 'value': '102,2'}, {'text': '102學年度暑修', 'value': '102,4'}, {'text': '101學年度第1學期', 'value': '101,1'}, {'text': '101學年度第2學期', 'value': '101,2'}, {'text': '101學年度寒修', 'value': '101,3'}, {'text': '101學年度暑修', 'value': '101,4'}, {'text': '100學年度第1學期', 'value': '100,1'}, {'text': '100學年度第2學期', 'value': '100,2'}, {'text': '100學年度寒修', 'value': '100,3'}, {'text': '100學年度暑修', 'value': '100,4'}, {'text': '99學年度第1學期', 'value': '99,1'}, {'text': '99學年度第2學期', 'value': '99,2'}, {'text': '99學年度寒修', 'value': '99,3'}, {'text': '99學年度暑修', 'value': '99,4'}, {'text': '98學年度第1學期', 'value': '98,1'}, {'text': '98學年度第2學期', 'value': '98,2'}, {'text': '98學年度寒修', 'value': '98,3'}, {'text': '98學年度暑修', 'value': '98,4'}];
     $rootScope.arg01 = "103";
@@ -185,6 +188,10 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
         return $http.get(backup_server + "backup");
     };
 
+    factory.checkServerStatus = function() {
+        return $http.get(api_server + "status")
+    }
+
 
     factory.login = function(username, password) {
         return $http({
@@ -295,7 +302,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
                 }).then(function(res) {
                     if (res) {
                         if (ionic.Platform.isIOS()) {
-                            $window.location = "#";
+                            $window.location = "https://itunes.apple.com/tw/app/gao-ying-xiao-wu-tong/id893131497?l=zh&mt=8";
                         } else {
                             $window.location = "market://details?id=com.kuas.ap";
                         }
@@ -350,6 +357,14 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
             } else {
                 $scope.main.is_login = false;
             }
+        });
+    };
+
+    $scope.checkServerStatus = function() {
+        $scope.main.server_status = [false, 400, 400];
+        AuthFactory.checkServerStatus()
+        .success(function(data) {
+            $scope.main.server_status = data;
         });
     };
 

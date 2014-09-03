@@ -1,4 +1,4 @@
-<ion-view title="Login" hide-back-button="true">
+<ion-view title="Login" hide-back-button="true" id="login-content">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
@@ -18,7 +18,7 @@
       </button>
     </div>
   </div>
-  <div class="page-wrapper" ng-init="checkBackupOnline();checkFixed();checkLogin();forceUpdate();">
+  <div class="page-wrapper" ng-init="checkBackupOnline();checkFixed();checkServerStatus();checkLogin();forceUpdate();" style="padding-bottom: 0;">
     <div class="login-input"  ng-show="!main.is_login">
         <h1>KUAS AP</h1>
         <div>
@@ -31,21 +31,30 @@
           <button class="button button-positive" ng-click="login()">
             登入系統
           </button>
-
         </div>
     </div>
-  <div>
+  </div>
   <div class="remember" ng-show="!main.is_login">
     <div class="remember-password">
       <input type="checkbox" style="vertical-align: middle" ng-model="remember_password">
       <span ng-click="triggleRememberPassword()" style="vertical-align: middle">記住密碼</span>
     </div>
     <span class="version">v.{{ version }}</span>
+  </div>
 
-  <div>
-
-  <div class="page-wrapper" style="width:70%">
+  <div class="page-wrapper" style="margin-top: 3em; line-height: 1em;">
     {{ is_fixed }}
   </div>
   </ion-content>
+
+  <div id="login-footer" class="status hide-on-keyboard-open">
+    <div class="status-word">
+      <i>校務</i>
+      <i>請假</i>
+      <i>校車</i>
+    </div>
+    <i class="fa fa-circle" ng-attr-style="{{main.server_status[0] && 'color:#2ecc71' || 'color:#e74c3c' }}"></i>
+    <i class="fa fa-circle" ng-attr-style="{{main.server_status[1] == 200 && 'color:#2ecc71' || 'color:#e74c3c' }}"></i>
+    <i class="fa fa-circle" ng-attr-style="{{main.server_status[2] == 200 && 'color:#2ecc71' || 'color:#e74c3c' }}"></i>
+  </div>
 </ion-view>

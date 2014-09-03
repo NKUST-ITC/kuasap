@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
@@ -8134,6 +8135,26 @@ blockquote:before {
 
 blockquote p {
   display: inline; }
+
+#login-footer {
+  /* 設定footer的高度 */
+  height: 50x;
+  box-sizing: border-box;
+  /* 設定footer絕對位置在底部 */
+  position: fixed;
+  bottom: 5%;
+  top: auto;
+  text-align: center;
+  width: 100%; }
+
+.status {
+  padding-top: 10%; }
+
+.status i {
+  margin: 0 1em; }
+
+.status-word i {
+  margin: 0 0.5em; }
 
 .author {
   text-align: center;
