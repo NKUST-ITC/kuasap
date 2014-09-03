@@ -8,47 +8,58 @@
     </a>
   </ion-nav-buttons>
 
-  <ion-content class="has-header">
-    <div class="page-wrapper" ng-controller="AuthCtrl" ng-init="changeArgs('102', '2');leave()">
 
-    <div ng-show="prepare">
-        <div class="spinner" ng-show="loading">
-          <div class="rect1"></div>
-          <div class="rect2"></div>
-          <div class="rect3"></div>
-          <div class="rect4"></div>
-          <div class="rect5"></div>
-        </div>
-        <div class="ion-alert-circled" ng-show="network_error"></div>
-        <div class="page-wrapper">
-          {{ quote }}
-        </div>
-    </div>
+  <ion-tabs class="tabs-icon-top">
+      <ion-tab title="請假查詢" icon="fa fa-search" on-select="notification()">
+        <ion-content class="has-header">
+          <div class="page-wrapper" ng-controller="AuthCtrl" ng-init="changeArgs('102', '2');leave()">
 
-    <div ng-show="!prepare">
-      <div style="text-align:center;margin-bottom:-20px;">
-        <div class="buttons">
-          <button class="button icon-right ion-ios7-arrow-down button-clear button-dark" ng-click="openModal('leave')">{{ modalData.leave_msg }}</button>
-        </div>
-      </div>
-      <div ng-show="content[0] == '本學期無缺曠課記錄'">
-        <table class="leave-table">
-          <tr>
-            <td style="display:inline;border-top:none;border-right: none;">
-              {{ content[0][0] }}
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div ng-show="content[0] != '本學期無缺曠課記錄'">
-        <table class="leave-table">
-          <tr ng-repeat="r in content">
-            <td ng-class="(!$index) ? 'leave-date' : ''" ng-repeat="d in r track by $index">
-              {{ d }}
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </ion-content>
+          <div ng-show="prepare">
+              <div class="spinner" ng-show="loading">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+              </div>
+              <div class="ion-alert-circled" ng-show="network_error"></div>
+              <div class="page-wrapper">
+                {{ quote }}
+              </div>
+          </div>
+
+          <div ng-show="!prepare">
+            <div style="text-align:center;margin-bottom:-20px;">
+              <div class="buttons">
+                <button class="button icon-right ion-ios7-arrow-down button-clear button-dark" ng-click="openModal('leave')">{{ modalData.leave_msg }}</button>
+              </div>
+            </div>
+            <div ng-show="content[0] == '本學期無缺曠課記錄'">
+              <table class="leave-table">
+                <tr>
+                  <td style="display:inline;border-top:none;border-right: none;">
+                    {{ content[0][0] }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div ng-show="content[0] != '本學期無缺曠課記錄'">
+              <table class="leave-table">
+                <tr ng-repeat="r in content">
+                  <td ng-class="(!$index) ? 'leave-date' : ''" ng-repeat="d in r track by $index">
+                    {{ d }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab title="請假登錄" icon="fa fa-edit" on-select="notification()">
+        <ion-content class="has-header">
+  
+        </ion-content>
+      </ion-tab>
+    </ion-tabs>
 </ion-view>
