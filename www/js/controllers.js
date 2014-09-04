@@ -58,9 +58,9 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
     });
 
     $scope.modalData = {
-        "score_msg" : '102學年度第2學期',
+        "score_msg" : '103學年度第1學期',
         "course_msg": '103學年度第1學期',
-        "leave_msg" : '102學年度第2學期',
+        "leave_msg" : '103學年度第1學期',
     };
 
     $scope.changeArgs = function(arg01, arg02) {
@@ -104,7 +104,6 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
     $rootScope.arg01 = item.value.split(",")[0];
     $rootScope.arg02 = item.value.split(",")[1];
 
-    console.log($scope.main.func);
     if ($scope.main.func == "score") {
         $scope.modalData.score_msg = item.text;
         $rootScope.score();
@@ -233,7 +232,6 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
     };
 
     factory.leave = function() {
-        console.log($rootScope.arg01, $rootScope.arg02);
         return $http({
             url: api_server + "leave",
             method: "POST",
@@ -507,7 +505,6 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
         // Check is login ?
         var promise = $scope.is_login();
         promise.then(function(data) {
-            console.log(data);
             if (data === 0) {
                 $scope.quote = relogin_quote;
 
@@ -521,7 +518,6 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
             } else {
                 // Start loading
                 $scope.loading = true;
-
 
                 // Start fetching data
                 AuthFactory.leave()
