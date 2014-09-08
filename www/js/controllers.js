@@ -6,7 +6,7 @@ var backup_sever = "";
 api_server = "http://kuas.grd.idv.tw:14768/";
 backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.3.6";
+android_version = "1.3.7";
 ios_version = "1.3.2";
 
 relogin_quote = "請點選右上方齒輪重新登入";
@@ -274,8 +274,8 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 
 .controller("AuthCtrl", function($q, $scope, $rootScope, $window, $ionicPopup, localStorageService, AuthFactory) {
     $scope.version = ionic.Platform.isIOS() ? ios_version : android_version;
-    $scope.username = localStorageService.get("username");
-    $scope.password = localStorageService.get("password");
+    $scope.username = localStorageService.get("username") ? localStorageService.get("username") : "";
+    $scope.password = localStorageService.get("password") ? localStorageService.get("password") : "";
     $scope.remember_password = localStorageService.get("remember") == "1" ? true : false;
     $scope.is_fixed = "";
 
@@ -382,6 +382,18 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 
 
     $scope.login = function() {
+        if (!$scope.username) {
+            $window.plugins.toast.showShortBottom("請輸入帳號");
+            $scope.main.is_login = false;
+            return;
+        }
+
+        if (!$scope.password) {
+            $window.plugins.toast.showShortBottom("請輸入密碼");
+            $scope.main.is_login = false;
+            return;
+        }
+
         AuthFactory.login($scope.username, $scope.password)
         .success(function(data) {
             if (data == "true") {
