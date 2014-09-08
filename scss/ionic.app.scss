@@ -329,6 +329,22 @@ text-shadow: 4px 4px 4px rgba(150, 150, 150, 1);
   }
 }
 
+.leave-button {
+  float:left;
+  width: 20%;
+}
+
+.leave-section-button {
+  float: left;
+  width: 6%;
+  min-height: 1em;
+  min-width: 1em;
+}
+
+.leave-day {
+  padding-bottom: 10px;
+}
+
 .bus-table p {
   font-size: 2em;
 }
