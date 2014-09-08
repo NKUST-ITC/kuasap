@@ -8339,6 +8339,19 @@ blockquote p {
 @media screen and (min-width: 430px) {
   .course-prompt-sunday {
     display: none; } }
+.leave-button {
+  float: left;
+  width: 20%; }
+
+.leave-section-button {
+  float: left;
+  width: 6%;
+  min-height: 1em;
+  min-width: 1em; }
+
+.leave-day {
+  padding-bottom: 10px; }
+
 .bus-table p {
   font-size: 2em; }
 
