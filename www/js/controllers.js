@@ -642,7 +642,6 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
                 if (!~action) {
                     AuthFactory.bus_booking(busId, "")
                     .success(function(data) {
-                        console.log(unescape(JSON.parse(data)));
                         $window.plugins.toast.showShortBottom(unescape(JSON.parse(data)));
                     });
 
@@ -655,8 +654,8 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 
                 AuthFactory.bus_query($scope.before_date)
                 .success(function(data) {
+                    $scope.data = [];
                     $scope.data = data;
-                    console.log(data);
                     $scope.no_bus = $scope.data.length ? false: true;
                 });
             }
