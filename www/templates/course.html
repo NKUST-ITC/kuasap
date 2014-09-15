@@ -53,7 +53,11 @@
                 <th class="course-table-sunday" ng-if="content[2]">日</th>
             </tr>
             <tr ng-repeat="r in content[0] track by $index">
-                <td>{{ content[0][$index]['time'] }}</td>
+                <td>
+                    <button class="button" ng-click="showTime(content[0][$index]['time'])">
+                        {{ content[0][$index]['time'] }}
+                    </button>
+                </td>
                 <td>
                     <button ng-if="content[0][$index]['1']['course_name']" class="button" ng-click="showCourse(content[0][$index]['1']['course_name'], content[0][$index]['1']['course_teacher'], content[0][$index]['1']['course_classroom'])">
                         {{ content[0][$index][1]['course_name_simple'] }}
