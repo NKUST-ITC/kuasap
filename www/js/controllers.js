@@ -2,11 +2,10 @@ var api_server = "";
 var backup_sever = "";
 //api_server = "http://localhost:5000/";
 //api_server = "http://192.168.0.193:5000/";
-//api_server = "http://kuas.grd.idv.tw:14765/";
 api_server = "http://kuas.grd.idv.tw:14768/";
 backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.3.8 leave";
+android_version = "1.3.9";
 ios_version = "1.3.2";
 
 relogin_quote = "請點選右上方齒輪重新登入";
@@ -121,7 +120,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 })
 
 
-.factory('AuthFactory', function($q, $http, $rootScope) {
+.factory('AuthFactory', function($q, $http, $rootScope, localStorageService) {
     var factory = {};
 
     factory.is_login = function() {
@@ -225,7 +224,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
                 "fncid": "ag008",
                 "arg01": $rootScope.arg01,
                 "arg02": $rootScope.arg02,
-                "arg03": $rootScope.username
+                "arg03": localStorageService.get("username")
             }),
             headers: {"Content-Type": "application/x-www-form-urlencoded"}
         });
@@ -513,7 +512,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 
                 return;
              } else if (data == -1) {
-                window.plugins.toast.show("網路不穩定問題，請稍候嘗試...");
+                $window.plugins.toast.show("網路不穩定問題，請稍候嘗試...");
                 return;
             } else {
                 // Start loading
@@ -536,7 +535,16 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 
 })
 
-.controller("CourseCtrl", function($scope, $ionicPopup) {
+.controller("CourseCtrl", function($scope, $ionicPopup, $window) {
+    $scope.course_time = {"M": "", "第1節": "08:10 - 09:00", "第2節": "09:10 - 10:00", "第3節": "10:10 - 11:00", "第4節": "11:10 - 12:00", "A": "", "第5節": "13:30 - 14:20", "第6節": "14:30 - 15:20", "第7節": "15:30 - 16:20", "第8節": "16:30 - 17:20", "B": "", "第11節": "18:30 - 19:20", "第12節": "19:25 - 20:15", "第13節": "20:20 - 21:00", "第14節": "21:15 - 22:05"};
+
+ 
+    $scope.showTime = function(i) {
+        if ($scope.course_time[i] !== "") {
+            $window.plugins.toast.showShortBottom(i + ": " + $scope.course_time[i]);
+        }
+    };
+    
     $scope.showCourse = function(course_name, course_teacher, course_classroom) {
         var coursePopup = $ionicPopup.alert({
             content: " \
