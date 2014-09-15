@@ -8339,6 +8339,15 @@ blockquote p {
 @media screen and (min-width: 430px) {
   .course-prompt-sunday {
     display: none; } }
+.outage img {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: -150px; }
+
 .leave-button {
   float: left;
   width: 20%; }
