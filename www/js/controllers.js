@@ -1,11 +1,12 @@
 var api_server = "";
 var backup_sever = "";
+
 //api_server = "http://localhost:5000/";
 //api_server = "http://192.168.0.193:5000/";
 api_server = "http://kuas.grd.idv.tw:14768/";
 backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.3.9";
+android_version = "1.3.10";
 ios_version = "1.3.2";
 
 relogin_quote = "請點選右上方齒輪重新登入";
@@ -83,7 +84,19 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
                     window.open('https://facebook.com/louie.lu.180', '_system', 'location=no');      
                 }
             );
-        }
+        } else if (ionic.Platform.isIOS()) {
+            appAvailability.check(
+                'fb://', // URI Scheme
+                function() {           // Success callback
+                    window.open('fb://profile/100000257989689', '_system', 'location=no');   
+                },
+                function() {           // Error callback
+                    window.open('https://facebook.com/louie.lu.180', '_system', 'location=no');      
+                }
+            );
+        } else {
+            window.open('https://facebook.com/louie.lu.180', '_system', 'location=no');
+        };
     };
 
     $scope.github = function() {
