@@ -296,22 +296,32 @@ text-shadow: 4px 4px 4px rgba(150, 150, 150, 1);
     border-right: 1px solid #CCC;
     color: #669;
     white-space: nowrap;
-    height: 40px;
-    width: 40px;
+    height: 43px;
+    min-width: 50px;
 }
 
+.course-time-button {
+  width: 30px;
+  font-size: 0.5em;
+}
 
 .course-prompt-saturday, .course-prompt-sunday {
   margin-bottom: -13px;
 }
 
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 360px) {
+  .button {
+    height: 40px;
+    min-width: 40px;
+    font-size: 1em;
+  }
+
   .course-table-saturday {
     display: none;
   }
 }
 
-@media screen and (min-width: 380px) {
+@media screen and (min-width: 360px) {
   .course-prompt-saturday {
     display: none;
   }
