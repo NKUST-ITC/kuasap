@@ -206,6 +206,23 @@ text-shadow: 4px 4px 4px rgba(150, 150, 150, 1);
     width: 20px;
 }
 
+.leave-check-date {
+  border: 2px solid #F00;
+  border-radius: 5px;
+  width: 95%;
+  margin: 0px auto;
+  padding: 20px 0 20px 0;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.leave-type-list:last-child {
+  margin-bottom: 10px;
+}
+
+.leave-type {
+}
+
 @media screen and (max-width: 479px) {
     .leave-table td {
         padding-left: 0px;
@@ -302,7 +319,6 @@ text-shadow: 4px 4px 4px rgba(150, 150, 150, 1);
 
 .course-time-button {
   width: 30px;
-  font-size: 0.5em;
 }
 
 .course-prompt-saturday, .course-prompt-sunday {
@@ -313,7 +329,10 @@ text-shadow: 4px 4px 4px rgba(150, 150, 150, 1);
   .course-table button {
     height: 40px;
     min-width: 40px;
-    font-size: 1em;
+  }
+
+  .course-time-button {
+
   }
 
   .course-table-saturday {

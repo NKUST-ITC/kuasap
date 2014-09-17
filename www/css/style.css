@@ -8249,6 +8249,18 @@ blockquote p {
 .leave-table .leave-date {
   width: 20px; }
 
+.leave-check-date {
+  border: 2px solid #F00;
+  border-radius: 5px;
+  width: 95%;
+  margin: 0px auto;
+  padding: 20px 0 20px 0;
+  text-align: center;
+  font-size: 1.2em; }
+
+.leave-type-list:last-child {
+  margin-bottom: 10px; }
+
 @media screen and (max-width: 479px) {
   .leave-table td {
     padding-left: 0px;
@@ -8325,8 +8337,7 @@ blockquote p {
   min-width: 50px; }
 
 .course-time-button {
-  width: 30px;
-  font-size: 0.5em; }
+  width: 30px; }
 
 .course-prompt-saturday, .course-prompt-sunday {
   margin-bottom: -13px; }
@@ -8334,8 +8345,7 @@ blockquote p {
 @media screen and (max-width: 360px) {
   .course-table button {
     height: 40px;
-    min-width: 40px;
-    font-size: 1em; }
+    min-width: 40px; }
 
   .course-table-saturday {
     display: none; } }
