@@ -54,12 +54,12 @@
             </tr>
             <tr ng-repeat="r in content[0] track by $index">
                 <td>
-                    <!--
                     <button class="button" ng-click="showTime(content[0][$index]['time'])">
                         {{ content[0][$index]['time'] }}
                     </button>
-                    -->
+                    <!--
                     {{ content[0][$index]['time'] }}
+                    -->
                 </td>
                 <td>
                     <button ng-if="content[0][$index]['1']['course_name']" class="button" ng-click="showCourse(content[0][$index]['1']['course_name'], content[0][$index]['1']['course_teacher'], content[0][$index]['1']['course_classroom'])">
