@@ -54,45 +54,45 @@
             </tr>
             <tr ng-repeat="r in content[0] track by $index">
                 <td>
-                    <button class="button" ng-click="showTime(content[0][$index]['time'])">
+                    <!--
+                    <button class="button course-time-button" ng-click="showTime(content[0][$index]['time'])">
                         {{ content[0][$index]['time'] }}
                     </button>
-                    <!--
-                    {{ content[0][$index]['time'] }}
                     -->
+                    {{ content[0][$index]['time'] }}
                 </td>
                 <td>
-                    <button ng-if="content[0][$index]['1']['course_name']" class="button" ng-click="showCourse(content[0][$index]['1']['course_name'], content[0][$index]['1']['course_teacher'], content[0][$index]['1']['course_classroom'])">
+                    <button ng-if="content[0][$index]['1']['course_name']" class="button" ng-click="showCourse(content[0][$index]['1']['course_name'], content[0][$index]['1']['course_teacher'], content[0][$index]['1']['course_classroom'], content[0][$index]['time'])">
                         {{ content[0][$index][1]['course_name_simple'] }}
                     </button>
                 </td>
                 <td>
-                    <button  ng-if="content[0][$index]['2']['course_name']" class="button" ng-click="showCourse(content[0][$index]['2']['course_name'], content[0][$index]['2']['course_teacher'], content[0][$index]['2']['course_classroom'])">
+                    <button  ng-if="content[0][$index]['2']['course_name']" class="button" ng-click="showCourse(content[0][$index]['2']['course_name'], content[0][$index]['2']['course_teacher'], content[0][$index]['2']['course_classroom'], content[0][$index]['time'])">
                         {{ content[0][$index][2]['course_name_simple'] }}
                     </button>
                 </td>
                 <td>
-                    <button  ng-if="content[0][$index]['3']['course_name']" class="button" ng-click="showCourse(content[0][$index]['3']['course_name'], content[0][$index]['3']['course_teacher'], content[0][$index]['3']['course_classroom'])">
+                    <button  ng-if="content[0][$index]['3']['course_name']" class="button" ng-click="showCourse(content[0][$index]['3']['course_name'], content[0][$index]['3']['course_teacher'], content[0][$index]['3']['course_classroom'], content[0][$index]['time'])">
                         {{ content[0][$index][3]['course_name_simple'] }}
                     </button>
                 </td>
                 <td>
-                    <button  ng-if="content[0][$index]['4']['course_name']" class="button" ng-click="showCourse(content[0][$index]['4']['course_name'], content[0][$index]['4']['course_teacher'], content[0][$index]['4']['course_classroom'])">
+                    <button  ng-if="content[0][$index]['4']['course_name']" class="button" ng-click="showCourse(content[0][$index]['4']['course_name'], content[0][$index]['4']['course_teacher'], content[0][$index]['4']['course_classroom'], content[0][$index]['time'])">
                         {{ content[0][$index][4]['course_name_simple'] }}
                     </button>
                 </td>
                 <td>
-                    <button  ng-if="content[0][$index]['5']['course_name']" class="button" ng-click="showCourse(content[0][$index]['5']['course_name'], content[0][$index]['5']['course_teacher'], content[0][$index]['5']['course_classroom'])">
+                    <button  ng-if="content[0][$index]['5']['course_name']" class="button" ng-click="showCourse(content[0][$index]['5']['course_name'], content[0][$index]['5']['course_teacher'], content[0][$index]['5']['course_classroom'], content[0][$index]['time'])">
                         {{ content[0][$index][5]['course_name_simple'] }}
                     </button>
                 </td>
                 <td class="course-table-saturday" ng-if="content[2] || content[1]">
-                    <button ng-if="content[0][$index]['6']['course_name']" class="button" ng-click="showCourse(content[0][$index]['6']['course_name'], content[0][$index]['6']['course_teacher'], content[0][$index]['6']['course_classroom'])">
+                    <button ng-if="content[0][$index]['6']['course_name']" class="button" ng-click="showCourse(content[0][$index]['6']['course_name'], content[0][$index]['6']['course_teacher'], content[0][$index]['6']['course_classroom'], content[0][$index]['time'])">
                         {{ content[0][$index][6]['course_name_simple'] }}
                     </button>
                 </td>
                 <td class="course-table-sunday" ng-if="content[2]">
-                    <button ng-if="content[0][$index]['7']['course_name']" class="button" ng-click="showCourse(content[0][$index]['7']['course_name'], content[0][$index]['7']['course_teacher'], content[0][$index]['7']['course_classroom'])">
+                    <button ng-if="content[0][$index]['7']['course_name']" class="button" ng-click="showCourse(content[0][$index]['7']['course_name'], content[0][$index]['7']['course_teacher'], content[0][$index]['7']['course_classroom'], content[0][$index]['time'])">
                         {{ content[0][$index][7]['course_name_simple'] }}
                     </button>
                 </td>           
