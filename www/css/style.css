@@ -8326,13 +8326,13 @@ blockquote p {
 
 .course-time-button {
   width: 30px;
-  font-size: 1em; }
+  font-size: 0.5em; }
 
 .course-prompt-saturday, .course-prompt-sunday {
   margin-bottom: -13px; }
 
 @media screen and (max-width: 360px) {
-  .button {
+  .course-table button {
     height: 40px;
     min-width: 40px;
     font-size: 1em; }
