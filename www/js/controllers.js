@@ -6,7 +6,7 @@ var backup_sever = "";
 api_server = "http://kuas.grd.idv.tw:14768/";
 backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.3.12";
+android_version = "1.4.0";
 ios_version = "1.3.2";
 
 relogin_quote = "請點選右上方齒輪重新登入";
@@ -250,6 +250,21 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
             data: $.param({
                 "arg01": $rootScope.arg01,
                 "arg02": $rootScope.arg02
+            }),
+            headers: {"Content-Type": "application/x-www-form-urlencoded"}
+        });
+    };
+
+    factory.leave_submit = function(start_date, end_date, reason_id, reason_text, section) {
+        return $http({
+            url: api_server + "leave/submit",
+            method: "POST",
+            data: $.param({
+                "start_date": start_date,
+                "end_date": end_date,
+                "reason_id": reason_id,
+                "reason_text": reason_text,
+                "section": section
             }),
             headers: {"Content-Type": "application/x-www-form-urlencoded"}
         });
@@ -548,23 +563,26 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 
 })
 
-.controller("CourseCtrl", function($scope, $ionicPopup, $window) {
+.controller("CourseCtrl", function($scope, $rootScope, $ionicPopup, $window) {
     $scope.course_time = {"M": "", "第1節": "08:10 - 09:00", "第2節": "09:10 - 10:00", "第3節": "10:10 - 11:00", "第4節": "11:10 - 12:00", "A": "", "第5節": "13:30 - 14:20", "第6節": "14:30 - 15:20", "第7節": "15:30 - 16:20", "第8節": "16:30 - 17:20", "B": "", "第11節": "18:30 - 19:20", "第12節": "19:25 - 20:15", "第13節": "20:20 - 21:00", "第14節": "21:15 - 22:05"};
 
  
-    $scope.showTime = function(i) {
-        if ($scope.course_time[i] !== "") {
-            $window.plugins.toast.showShortBottom(i + ": " + $scope.course_time[i]);
-        }
-    };
+    //$scope.showTime = function(i) {
+    //    if ($scope.course_time[i] !== "") {
+    //        $window.plugins.toast.showShortBottom(i + ": " + $scope.course_time[i]);
+    //    }
+    //};
+    //$rootScope.showTime = $scope.showTime;
+
     
-    $scope.showCourse = function(course_name, course_teacher, course_classroom) {
+    $scope.showCourse = function(course_name, course_teacher, course_classroom, course_time) {
         var coursePopup = $ionicPopup.alert({
             content: " \
             <div class='alert-dialog'> \
                 <p>課程名稱: " + course_name + 
                 "<p>授課老師: " + course_teacher + 
                 "<p>教室位置: " + course_classroom + 
+                "<p>上課時間: " + $scope.course_time[course_time] +
            "</div>"
         });
     };
@@ -574,6 +592,142 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 
 })
 
+.controller("LeaveCtrl", function($scope, $ionicPopup, $window, AuthFactory) {
+    $scope.start_date = "";
+    $scope.start_collapsed = false;
+
+    $scope.end_date = "";
+    $scope.end_collapsed = false;
+
+    $scope.leave_type = "";
+    $scope.leave_type_list = ["事假", "病假", "公假", "喪假", "產假"];
+    $scope.type_collapsed = true;
+
+    $scope.type_map = {"事假": "21", "病假": "22", "公假": "23", "喪假": "24", "產假": "26"};
+    $scope.reason_text = "";
+
+
+    $scope.getDays = function() {
+        var a = new Date($scope.start_date);
+        var b = new Date($scope.end_date);
+
+        return ((b - a) / 86400000) + 1;
+    };
+
+    $scope.compareDate = function(d1, d2) {
+        var a = new Date(d1);
+        var b = new Date(d2);
+
+        return (b - a) >= 0;
+    };
+
+    $scope.typeToggle = function() {
+        $scope.type_collapsed = !$scope.type_collapsed;
+    };
+
+    $scope.checkSubmit = function() {
+        if (!$scope.start_date && !$scope.end_date) {
+            return false;
+        }
+
+        if (!$scope.compareDate($scope.start_date, $scope.end_date)) {
+            return false;
+        }
+
+        if (!$scope.leave_type) {
+            return false;
+        }
+
+        if (!$scope.reason_text) {
+            return false;
+        }
+
+        return true;
+    };
+
+    $scope.startDateSlideToggle = function(date) {
+        console.log("IN");
+        if (date != $scope.start_date) {
+            $scope.start_collapsed = !$scope.start_collapsed;
+        }
+
+        if (date && date != $scope.start_date) {
+            $scope.start_date = date;
+        }
+    };
+
+    $scope.endDateSlideToggle = function(date) {
+        if (date != $scope.end_date) {
+            $scope.end_collapsed = !$scope.end_collapsed;
+        }
+
+        if (date && date != $scope.end_date) {
+            $scope.end_date = date;
+        }
+    };
+
+    $scope.allDaySection = function(days) {
+        var section = [];
+
+
+        for (i=0; i < days; ++i) {
+            s = 15 * i;
+            section.push(s + 1);
+            section.push(s + 2);
+            section.push(s + 3);
+            section.push(s + 4);
+            section.push(s + 6);
+            section.push(s + 7);
+            section.push(s + 8);
+            section.push(s + 9);
+        }
+
+        return section;
+    };
+
+    $scope.submitLeave = function() {
+        $ionicPopup.confirm({
+            title: "請假登錄測試中",
+            template: "<p>注意！目前僅提供全天請假功能(1~4節, 5~8節)，請務必特別留意。</p><p>如要查詢單號，請上網頁版查詢。</p><p>其餘請假規定，請自行查閱。</p>",
+            okText: "我知道了",
+            cancelText: "算了返回"
+        }).then(function(res) {
+            if (!res) {
+                return;
+            } else {
+                $ionicPopup.confirm({
+                    title: "確認請假資訊",
+                    template: "\
+                        <p>起始日期: " + $scope.start_date + "</p>" +
+                        "<p>結束日期: " + $scope.end_date + "</p>" + 
+                        "<p>請假類別: " + $scope.leave_type + "</p>" + 
+                        "<p>請假事由: " + $scope.reason_text + "</p>" + 
+                        "<p>請假節次: 全天",
+                    okText: "確認送出",
+                    cancelText: "返回修改"
+                }).then(function(res) {
+                    if (!res) {
+                        return;
+                    } else {
+                        AuthFactory.leave_submit(
+                            $scope.start_date,
+                            $scope.end_date,
+                            $scope.type_map[$scope.leave_type],
+                            $scope.reason_text,
+                            JSON.stringify($scope.allDaySection($scope.getDays()))
+                            )
+                        .success(function(data) {
+                            $ionicPopup.alert({
+                                title: "假單送出結果",
+                                content: data[1]
+                            });
+                        });
+                    }
+                });
+            }
+        });
+    };
+})
 
 .controller("BusCtrl", function($scope, $ionicPopup, $window, AuthFactory) {
     //$scope.data = [{'EndEnrollDateTime': '2014-06-29 16:20', 'endStation': '燕巢', 'busId': '22567', 'reserveCount': '7', 'runDateTime': '07:20', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-29 17:50', 'endStation': '燕巢', 'busId': '22627', 'reserveCount': '17', 'runDateTime': '08:50', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-30 08:00', 'endStation': '燕巢', 'busId': '22687', 'reserveCount': '0', 'runDateTime': '13:00', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-29 17:00', 'endStation': '建工', 'busId': '22747', 'reserveCount': '0', 'runDateTime': '08:00', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-30 07:15', 'endStation': '建工', 'busId': '22807', 'reserveCount': '1', 'runDateTime': '12:15', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-30 11:45', 'endStation': '建工', 'busId': '22867', 'reserveCount': '23', 'runDateTime': '16:45', 'isReserve': '-1', 'limitCount': '999'}];
@@ -700,8 +854,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
         {"title": "燕巢校外賃居服務中心", "number": "(07) 381-4526 #8615"},
     ];
 
-    $scope.schedules = [{'events': ['(9/8) 中秋節放假一天', '(9/9- 9/11) 日間部新生始業輔導', '(9/9- 9/11) 日間部新生體檢', '(9/12) 教學研討會 （導師會議、導師輔導知能研習）'], 'week': '預備週'}, {'events': ['(9/15) 日間部、進修推廣處開學'], 'week': '第一週'}, {'events': ['(10/10) 國慶日 放假 一天'], 'week': '第四週'}, {'events': ['(10/26) 校運會', '(10/30) 校慶放假一天', '(10/31) 校運會補假ㄧ天'], 'week': '第七週'}, {'events': ['(11/10 ～ 11/15) 日間部、進修推廣處期中考試'], 'week': '第九週'}, {'events': ['(11/17) 103 學年度第一次校務會議'], 'week': '第十週'}, {'events': ['(1/1) 開國紀念日放假ㄧ天', '(1/2) 調整放假'], 'week': '第十六週'}, {'events': ['(1/5) 103 學年度第二次校務會議'], 'week': '第十七週'}, {'events': ['(1/12 ～ 1/17) 日間部、進修推廣處期末考試'], 'week': '第十八週'}, {'events': ['(2/18 - 23) 春節放假'], 'week': '預備週'}, {'events': ['(2/23) 補假一天(補2/21春節初三)', '(2/24) 教學研討會（導師會議、導師輔導知能研習）', '(2/25) 日間部、進修推廣處開學', '(2/27) 補假一天(補2/28和平紀念日)'], 'week': '第一週'}, {'events': ['(4/3) 補假一天(補4/4兒童節)'], 'week': '第六週'}, {'events': ['(4/6) 補假一天(補4/5民族掃墓節)'], 'week': '第七週'}, {'events': ['(4/20 ～ 4/25) 日間部、進修推廣處期中考試'], 'week': '第九週'}, {'events': ['(4/27) 103 學年度第三次校務會議'], 'week': '第十週'}, {'events': ['(6/13) 畢業典禮'], 'week': '第十六週'}, {'events': ['(6/19) 補假一天(補6/20端午節)', '(6/15) 103 學年度第四次校務會議'], 'week': '第十七週'}, {'events': ['(6/24~6/30) 日間部、進修推廣處期末考試'], 'week': '第十八週'}];
-    
+    $scope.schedules = [{'events': ['(9/8) 中秋節放假一天', '(9/9 - 9/11) 日間部新生始業輔導', '(9/9 - 9/11) 日間部新生體檢', '(9/12) 教學研討會 （導師會議、導師輔導知能研習）', '(9/12 -13) 新生體驗營'], 'week': '第103學年第一學期 預備週週'}, {'events': ['(9/15) 日間部、進修推廣處開學', '(9/17) 建工 社團嘉年華', '(9/18) 燕巢 社團嘉年華'], 'week': '第一週'}, {'events': ['(9/22) 迎新晚會'], 'week': '第二週'}, {'events': ['(10/10) 國慶日 放假一天'], 'week': '第四週'}, {'events': ['(10/20 - 10/25) 校慶系列活動'], 'week': '第六週'}, {'events': ['(10/26) 校運會', '(10/30) 校慶放假一天', '(10/31) 校運會補假ㄧ天'], 'week': '第七週'}, {'events': ['(11/3 - 11/7) 期中考預備週'], 'week': '第八週'}, {'events': ['(11/10 - 11/15) 日間部、進修推廣處期中考試'], 'week': '第九週'}, {'events': ['(11/17) 103 學年度第一次校務會議', '(11/20) 班級座談會'], 'week': '第十週'}, {'events': ['(11/26) 燕巢 三合一選舉', '(11/27) 建工 三合一選舉'], 'week': '第十一週'}, {'events': ['(12/5) 社團評鑑場地佈置', '(12/6) 社團評鑑'], 'week': '第十二週'}, {'events': ['(12/7) 社團評鑑展覽'], 'week': '第十三週'}, {'events': ['(12/19) 社團評鑑晚會'], 'week': '第十四週'}, {'events': ['(12/23) 期末座談會'], 'week': '第十五週'}, {'events': ['(1/1) 開國紀念日放假ㄧ天', '(1/2) 調整放假'], 'week': '第十六週'}, {'events': ['(1/5) 103 學年度第二次校務會議', '(1/5 - 1/9) 期末考預備週'], 'week': '第十七週'}, {'events': ['(1/12 - 1/17) 日間部、進修推廣處期末考試'], 'week': '第十八週'}, {'events': ['(2/18 - 23) 春節放假'], 'week': '第103學年第二學期 預備週週'}, {'events': ['(2/24) 教學研討會（導師會議、導師輔導知能研 習）', '(2/25) 日間部、進修推廣處開學'], 'week': '第一週'}, {'events': ['(4/20 - 4/25) 日間部、進修推廣處期中考試'], 'week': '第九週'}, {'events': ['(4/27) 103 學年度第三次校務會議'], 'week': '第十週'}, {'events': ['(6/13) 畢業典禮'], 'week': '第十六週'}, {'events': ['(6/15) 103 學年度第四次校務會議'], 'week': '第十七週'}, {'events': ['(6/24 - 6/30) 日間部、進修推廣處期末考試'], 'week': '第十八週'}];
     $scope.news = [];
     $scope.page = 1;
 
