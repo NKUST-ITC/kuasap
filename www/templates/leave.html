@@ -58,9 +58,84 @@
       </ion-tab>
       
       <ion-tab title="請假登錄" icon="fa fa-edit" on-select="">
-        <ion-content class="has-header">
+        <ion-content class="has-header" ng-controller="LeaveCtrl">
+          <!--
           <div class="outage">
             <img src="img/black_cat_outage.png"></img>
+          </div>
+          -->
+
+          <div step-one>
+            <button class="button button-full button-stable" style="height:4em" ng-click="startDateSlideToggle()">選擇起始時間 {{ start_date }} </button>
+            <div ng-show="start_collapsed">
+              <div pickadate style="width:90%;margin:0 auto;padding-bottom:5px;" ng-model="date" ng-attr-changeMonth="{{cm}}" ng-click="startDateSlideToggle(date)">
+              </div>
+            </div>
+          </div>
+
+          <div step-two>
+            <button class="button button-full button-stable" style="height:4em" ng-click="endDateSlideToggle()">選擇結束時間 {{ end_date }} </button>
+            <div ng-show="end_collapsed">
+              <div pickadate style="width:90%;margin:0 auto;padding-bottom:5px;" ng-model="date" ng-attr-changeMonth="{{cm}}" ng-click="endDateSlideToggle(date)">
+              </div>
+            </div>
+          </div>
+
+          <div check-date class="leave-check-date" ng-show="start_date && end_date && !compareDate(start_date, end_date)">
+            注意！起始時間大於結束時間！
+          </div>
+
+          <div ng-show="start_date && end_date && compareDate(start_date, end_date)">
+            <div step-three>
+              <button class="button button-full button-stable" style="height:4em" ng-click="typeToggle()">選擇請假類別 {{ leave_type }}</button>
+              <div class="list leave-type-list" ng-show="type_collapsed">
+                <label class="item item-radio" ng-click="typeToggle()">
+                  <input type="radio" name="group" ng-model="leave_type" value="事假">
+                  <div class="item-content leave-type">
+                    事假
+                  </div>
+                  <i class="radio-icon ion-checkmark"></i>
+                </label>
+                <label class="item item-radio" ng-click="typeToggle()">
+                  <input type="radio" name="group" ng-model="leave_type" value="病假">
+                  <div class="item-content leave-type">
+                    病假
+                  </div>
+                  <i class="radio-icon ion-checkmark"></i>
+                </label>
+                <label class="item item-radio" ng-click="typeToggle()">
+                  <input type="radio" name="group" ng-model="leave_type" value="公假">
+                  <div class="item-content leave-type">
+                    公假
+                  </div>
+                  <i class="radio-icon ion-checkmark"></i>
+                </label>
+                <label class="item item-radio" ng-click="typeToggle()">
+                  <input type="radio" name="group" ng-model="leave_type" value="喪假">
+                  <div class="item-content leave-type">
+                    喪假
+                  </div>
+                  <i class="radio-icon ion-checkmark"></i>
+                </label>
+                <label class="item item-radio" ng-click="typeToggle()">
+                  <input type="radio" name="group" ng-model="leave_type" value="產假">
+                  <div class="item-content leave-type">
+                    產假
+                  </div>
+                  <i class="radio-icon ion-checkmark"></i>
+                </label>
+              </div>
+            </div>
+
+            <div step-four class="list">
+              <label class="item item-input">
+                <input type="text" ng-model="reason_text" placeholder="請假事由" style="height:3em;">
+              </label>
+            </div>
+          </div>
+
+          <div step-five ng-show="checkSubmit()" style="margin-top:20px;">
+            <button class="button button-full button-positive" ng-click="submitLeave()" style="height:4em">送出請假登錄</button>
           </div>
         </ion-content>
       </ion-tab>
