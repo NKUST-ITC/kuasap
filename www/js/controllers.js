@@ -6,7 +6,7 @@ var backup_sever = "";
 api_server = "http://kuas.grd.idv.tw:14768/";
 backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.3.10.1";
+android_version = "1.3.11";
 ios_version = "1.3.2";
 
 relogin_quote = "請點選右上方齒輪重新登入";
