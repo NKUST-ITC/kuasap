@@ -310,8 +310,6 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
         var version = ionic.Platform.isIOS() ? ios_version : android_version;
 
         console.log(store);
-        console.log(api_server);
-
 
         AuthFactory.checkVersion()
         .success(function(store_version) {
