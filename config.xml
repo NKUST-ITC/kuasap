@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.kuas.ap" version="1.4.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>高應校務通</name>
+<widget id="com.kuas.ap.donate" version="1.4.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>高應校務通 Donate</name>
     <description>
         A KUAS AP Rebuild Project
     </description>

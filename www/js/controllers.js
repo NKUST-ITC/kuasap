@@ -180,12 +180,12 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
     factory.checkVersion = function() {
         if (ionic.Platform.isIOS()) {
             return $http({
-                url: api_server + "ios_version",
+                url: api_server + "ios_donate_version",
                 method: "GET"
             });
         } else {
             return $http({
-                url: api_server + "android_version",
+                url: api_server + "android_donate_version",
                 method: "GET"
             });
         }
@@ -327,7 +327,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
                         if (ionic.Platform.isIOS()) {
                             $window.location = "https://itunes.apple.com/tw/app/gao-ying-xiao-wu-tong/id893131497?l=zh&mt=8";
                         } else {
-                            $window.location = "market://details?id=com.kuas.ap";
+                            $window.location = "market://details?id=com.kuas.ap.donate";
                         }
                     } else {
                         ionic.Platform.exitApp();
