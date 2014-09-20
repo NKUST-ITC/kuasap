@@ -6,7 +6,7 @@ var backup_sever = "";
 api_server = "http://kuas.grd.idv.tw:14768/";
 backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.4.1 Donate";
+android_version = "1.4.2 Donate";
 ios_version = "1.3.2";
 
 relogin_quote = "請點選右上方齒輪重新登入";
@@ -316,7 +316,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
             if (versionCompare(store_version, version) > 0) {
                 console.log(store_version, version);
                 $ionicPopup.confirm({
-                    title: "檢測到新版本的高應校務通",
+                    title: "檢測到新版本的高應校務通 Donate",
                     template: " \
                      <div class='alert-dialog'> \
                      要到 " + store + " 安裝新版嗎？</div>",
