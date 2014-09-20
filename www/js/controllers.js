@@ -6,7 +6,7 @@ var backup_sever = "";
 api_server = "http://kuas.grd.idv.tw:14768/";
 backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.4.1";
+android_version = "1.4.3";
 ios_version = "1.3.2";
 
 relogin_quote = "請點選右上方齒輪重新登入";
@@ -573,6 +573,51 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
     };
     $rootScope.leave = $scope.leave;
 
+})
+
+.controller("NewsCtrl", function($scope, $ionicPopup, $http, $window, localStorageService) {
+    $scope.getNews = function() {
+        return $http({
+            url: api_server + 'news',
+            method: "GET"
+        });
+    };
+
+    $scope.showNews = function() {
+        $scope.getNews()
+        .success(function(data) {
+            // Check if there is no news_id
+            if (!localStorageService.get("news_id")) {
+                localStorageService.set("news_id", -1);
+            }
+
+            // Check is data[1] is 1 and version is greater then local
+            if (data[0] && data[1] > parseInt(localStorageService.get("news_id"))) {
+                // Update news_id
+                localStorageService.set("news_id", data[1]);
+
+                // Select type
+                if (data[4]) {
+                    $ionicPopup.confirm({
+                        title: data[2],
+                        template: "<style>.popup{width:90%} .popup-title{color:#56A7C4;font-size:2em;font-weight:700}</style>" + data[3],
+                        okText: "立即前往",
+                        cancelText: "朕知道了"
+                    }).then(function(res) {
+                        if (res) {
+                            $window.open(data[4], "_system", "location=no");
+                        }
+                    });
+                } else {
+                    $ionicPopup.alert({
+                        title: data[2],
+                        template: "<style>.popup{width:90%} .popup-title{color:#56A7C4;font-size:2em;font-weight:700}</style>" + data[3],
+                        okText: "朕知道了"
+                    });
+                }
+            }
+        });
+    };
 })
 
 .controller("CourseCtrl", function($scope, $rootScope, $ionicPopup, $window) {
