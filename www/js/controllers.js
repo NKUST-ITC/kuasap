@@ -316,7 +316,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
             if (versionCompare(store_version, version) > 0) {
                 console.log(store_version, version);
                 $ionicPopup.confirm({
-                    title: "檢測到新版本的高應校務通",
+                    title: "檢測到新版本的高應校務通 Donate",
                     template: " \
                      <div class='alert-dialog'> \
                      要到 " + store + " 安裝新版嗎？</div>",
