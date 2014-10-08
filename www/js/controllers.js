@@ -6,8 +6,8 @@ var backup_sever = "";
 api_server = "http://kuas.grd.idv.tw:14768/";
 backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.5.0 local test";
-ios_version = "1.3.2";
+android_version = "1.5.0";
+ios_version = "1.4.3";
 
 relogin_quote = "請點選右上方齒輪重新登入";
 
@@ -35,6 +35,14 @@ versionCompare = function(left, right) {
 
 angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 
+.filter('range', function() {
+  return function(input, total) {
+    total = parseInt(total);
+    for (var i=0; i<total; i++)
+      input.push(i);
+    return input;
+  };
+})
 
 .controller('AppCtrl', function($scope, $rootScope, $window, $ionicModal) {
     $scope.main = {
@@ -685,6 +693,28 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
     $scope.type_map = {"事假": "21", "病假": "22", "公假": "23", "喪假": "24", "產假": "26"};
     $scope.reason_text = "";
 
+    $scope.class_key = ['A', '1', '2', '3', '4', 'B', '5', '6', '7', '8', 'C', '11', '12', '13', '14'];
+    $scope.section = [];
+
+    $scope.init_section_state = function(days) {
+        $scope.section = Array.apply(null, new Array($scope.class_key.length * days)).map(Number.prototype.valueOf,0);
+    };
+
+
+    $scope.sectionToggle = function(s) {
+        $scope.section[s] = !$scope.section[s];
+    };
+
+    $scope.advanceDay = function(base_date, advance) {
+
+        base_date = new Date(base_date);
+        adv_date = new Date();
+
+        adv_date.setDate(base_date.getDate() + advance);
+        adv_date = adv_date.toJSON().split("T")[0];
+
+        return adv_date;
+    };
 
     $scope.getDays = function() {
         var a = new Date($scope.start_date);
@@ -745,6 +775,18 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
         }
     };
 
+
+    $scope.getSection = function() {
+        var sec = [];
+        for (i=0; i < $scope.section.length; ++i) {
+            if ($scope.section[i]) {
+                sec.push(i);
+            }
+        }
+
+        return sec;
+    };
+
     $scope.allDaySection = function(days) {
         var section = [];
 
@@ -767,7 +809,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
     $scope.submitLeave = function() {
         $ionicPopup.confirm({
             title: "請假登錄測試中",
-            template: "<p>注意！目前僅提供全天請假功能(1~4節, 5~8節)，請務必特別留意。</p><p>如要查詢單號，請上網頁版查詢。</p><p>其餘請假規定，請自行查閱。</p>",
+            template: "<p>注意！本功能將送出假單, 請在送出前再次確認您的請假節次，請務必特別留意。</p><p>如要查詢單號，請上網頁版查詢。</p><p>其餘請假規定，請自行查閱。</p>",
             okText: "我知道了",
             cancelText: "算了返回"
         }).then(function(res) {
@@ -781,7 +823,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
                         "<p>結束日期: " + $scope.end_date + "</p>" + 
                         "<p>請假類別: " + $scope.leave_type + "</p>" + 
                         "<p>請假事由: " + $scope.reason_text + "</p>" + 
-                        "<p>請假節次: 全天",
+                        "<p>請假節次: 請自行檢查",
                     okText: "確認送出",
                     cancelText: "返回修改"
                 }).then(function(res) {
@@ -793,7 +835,8 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
                             $scope.end_date,
                             $scope.type_map[$scope.leave_type],
                             $scope.reason_text,
-                            JSON.stringify($scope.allDaySection($scope.getDays()))
+                            JSON.stringify($scope.getSection())
+                            //JSON.stringify($scope.allDaySection($scope.getDays()))
                             )
                         .success(function(data) {
                             $ionicPopup.alert({

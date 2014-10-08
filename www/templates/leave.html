@@ -132,9 +132,23 @@
                 <input type="text" ng-model="reason_text" placeholder="請假事由" style="height:3em;">
               </label>
             </div>
+
+
+            <div step-five ng-repeat="n in [] | range:getDays()" ng-init="init_section_state(getDays());">
+              <div class="card">
+                <div class="item item-divider">
+                  {{ advanceDay(start_date, $index) }}
+                </div>
+                <div class="item item-text-wrap">
+                  <button class="button" ng-class="{'button-assertive': section[n * class_key.length + $index]}" ng-repeat="k in class_key" ng-click="sectionToggle(n * class_key.length + $index)">
+                    {{ k }}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div step-five ng-show="checkSubmit()" style="margin-top:20px;">
+          <div step-six ng-show="checkSubmit()" style="margin-top:20px;padding-bottom:20px">
             <button class="button button-full button-positive" ng-click="submitLeave()" style="height:4em">送出請假登錄</button>
           </div>
         </ion-content>
