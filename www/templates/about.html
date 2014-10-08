@@ -8,16 +8,22 @@
     </a>
   </ion-nav-buttons>
 
-  <ion-content class="has-header">
+  <ion-content class="has-header" ng-init="bonus_click=0">
     <div class="page-wrapper">
       <h2 style="font-size:2em;font-family:open sans;font-weight:700">KUAS AP: A KUAS Adminstration System for Mobile</h2>
 
-      <img src="img/nobody_but_you.png" style="width: 80%;"></img>
-      <blockquote style="width:90%;margin-left:20px;">
-        <i class="fa fa-quote-left fa-2x pull-left"></i>
-        「不要問為何沒有人做這個，先承認你就是『沒有人』」。
-        因為，「沒有人」是萬能的。
-      </blockquote>
+
+      <div ng-if="main.bonus_click < 5">
+        <img src="img/kuasap.png" style="width:80%;height:auto" ng-click="main.bonus_click = main.bonus_click + 1"></img>
+      </div>
+      <div ng-if="main.bonus_click == 5">
+        <img src="img/nobody_but_you.png" style="width: 80%;"></img>
+        <blockquote style="width:90%;margin-left:20px;">
+          <i class="fa fa-quote-left fa-2x pull-left"></i>
+          「不要問為何沒有人做這個，先承認你就是『沒有人』」。
+          因為，「沒有人」是萬能的。
+        </blockquote>
+      </div>
     </div>
     <div class="author">
       <span>Rebuild By</span>

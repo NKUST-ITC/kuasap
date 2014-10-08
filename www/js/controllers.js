@@ -6,7 +6,7 @@ var backup_sever = "";
 api_server = "http://kuas.grd.idv.tw:14768/";
 backup_server = "http://api.grd.idv.tw:14768/";
 
-android_version = "1.4.3";
+android_version = "1.5.0 local test";
 ios_version = "1.3.2";
 
 relogin_quote = "請點選右上方齒輪重新登入";
@@ -16,9 +16,9 @@ versionCompare = function(left, right) {
     if (typeof left + typeof right != 'stringstring')
         return false;
     
-    var a = left.split('.')
-    ,   b = right.split('.')
-    ,   i = 0, len = Math.max(a.length, b.length);
+    var a = left.split('.'),
+        b = right.split('.'),
+        i = 0, len = Math.max(a.length, b.length);
         
     for (; i < len; i++) {
         if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
@@ -39,6 +39,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 .controller('AppCtrl', function($scope, $rootScope, $window, $ionicModal) {
     $scope.main = {
         is_login: false,
+        bonus_click: 0,
         func: "",
         server_status: [false, 400, 400]
     };
@@ -96,7 +97,7 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
             );
         } else {
             window.open('https://facebook.com/louie.lu.180', '_system', 'location=no');
-        };
+        }
     };
 
     $scope.github = function() {
@@ -200,8 +201,8 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
     };
 
     factory.checkServerStatus = function() {
-        return $http.get(api_server + "status")
-    }
+        return $http.get(api_server + "status");
+    };
 
 
     factory.login = function(username, password) {
@@ -278,6 +279,12 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
                 "date": date
             }),
             headers: {"Content-Type": "application/x-www-form-urlencoded"}
+        });
+    };
+
+    factory.bus_reserve_query = function() {
+        return $http({
+            url: api_server + "bus/reserve",
         });
     };
 
@@ -804,10 +811,15 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
 .controller("BusCtrl", function($scope, $ionicPopup, $window, AuthFactory) {
     //$scope.data = [{'EndEnrollDateTime': '2014-06-29 16:20', 'endStation': '燕巢', 'busId': '22567', 'reserveCount': '7', 'runDateTime': '07:20', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-29 17:50', 'endStation': '燕巢', 'busId': '22627', 'reserveCount': '17', 'runDateTime': '08:50', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-30 08:00', 'endStation': '燕巢', 'busId': '22687', 'reserveCount': '0', 'runDateTime': '13:00', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-29 17:00', 'endStation': '建工', 'busId': '22747', 'reserveCount': '0', 'runDateTime': '08:00', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-30 07:15', 'endStation': '建工', 'busId': '22807', 'reserveCount': '1', 'runDateTime': '12:15', 'isReserve': '-1', 'limitCount': '999'}, {'EndEnrollDateTime': '2014-06-30 11:45', 'endStation': '建工', 'busId': '22867', 'reserveCount': '23', 'runDateTime': '16:45', 'isReserve': '-1', 'limitCount': '999'}];
     $scope.data = [];
+    $scope.reserve_data = [];
     $scope.before_date = "";
     $scope.no_bus = false;
     $scope.collapsed = true;
     $scope.loading = false;
+
+    $scope.change_title = function(title) {
+        $scope.title = title;
+    };
 
     $scope.init = function() {
         AuthFactory.is_login()
@@ -872,14 +884,27 @@ angular.module('starter.controllers', ['ionic', 'LocalStorageModule'])
         return $scope.source;
     };
 
+
+    $scope.reserve_query = function() {
+        $scope.loading = true;
+
+        AuthFactory.bus_reserve_query()
+        .success(function(data) {
+            $scope.reserve_data = data;
+            $scope.loading = false;
+        });
+
+
+    };
+
     $scope.book = function(d) {
-        action = d['isReserve'];
-        busId = d['busId'];
-        runDate = d['runDateTime'];
+        action = d.isReserve;
+        busId = d.busId;
+        runDate = d.runDateTime;
 
         $ionicPopup.confirm({
             title: "確定要 " + (!~action ? "預定" : "取消") + " 本校車車次？",
-            template: "<div class='alert-dialog'><p>" + (!~action ? '要預定從' : '要取消從')  + (d['endStation'] == '燕巢' ? '建工到燕巢</p>' : '燕巢到建工</p>') + d['Time'] + " 的校車嗎?</div>",
+            template: "<div class='alert-dialog'><p>" + (!~action ? '要預定從' : '要取消從')  + (d.endStation == '燕巢' ? '建工到燕巢</p>' : '燕巢到建工</p>') + d.Time + " 的校車嗎?</div>",
             okText: !~action ? "預定校車" : "取消校車",
             cancelText: "返回"
         }).then(function(res) {

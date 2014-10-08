@@ -1,4 +1,4 @@
-<ion-view title="Bus" hide-back-button="true">
+<ion-view title='{{ title }}' hide-back-button="true">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
@@ -8,74 +8,145 @@
     </a>
   </ion-nav-buttons>
 
-  <ion-content class="has-header" ng-init="init()">
-    <div class="page-wrapper" ng-show="!main.is_login" ng-init="get_today()">
-      <div class="spinner">
-        <div class="rect1"></div>
-        <div class="rect2"></div>
-        <div class="rect3"></div>
-        <div class="rect4"></div>
-        <div class="rect5"></div>
-      </div>
-      <div class="page-wrapper">
-        {{ quote }}
-      </div>
-    </div>
-    <div class="page-wrapper" ng-show="main.is_login">
-      <div step-one>
-        <button class="button button-full button-stable" style="height:4em" ng-click="slideToggle()">選擇乘車時間 {{ date }} </button>
-        <div ng-show="collapsed">
-          <div pickadate style="width:90%;margin:0 auto;padding-bottom:5px;" ng-model="date" ng-attr-changeMonth="{{cm}}" ng-click="slideToggle(date)">
-          </div>
-        </div>
-      </div>
 
-      <div step-two class="bus-choice" ng-show='date && before_date'>
-        <button class="button button-positive button-full button-left" ng-click="change_src('j')">
-          從建工出發的車次
-        </button>
-        <button class="button button-balanced button-full button-right" ng-click="change_src('y')">
-          從燕巢出發的車次
-        </button>
-      </div>
+    <ion-tabs class="tabs-icon-top">
+      <ion-tab title="校車預約" icon="fa fa-bus" on-select="change_title('校車預約')">
 
-      <div ng-show="loading">
-        <div class="spinner">
-          <div class="rect1"></div>
-          <div class="rect2"></div>
-          <div class="rect3"></div>
-          <div class="rect4"></div>
-          <div class="rect5"></div>
-        </div>
-      </div>
-
-      <div ng-show="!loading">
-        <div ng-show="no_bus" style="font-size:1.5em">
-          <p>本日無任何校車班次</p>
-          <p>請重新選擇日期.</p>
-        </div>
-
-        <div ng-show="!jiangong && !yanchao && data">
-          請點擊建工出發車次或是燕巢出發車次
-        </div>
-        <div step-three>
-          <div class="list bus-table">
-            <div ng-repeat="d in data">
-              <button class="button button-block button-positive " ng-class="{'button-assertive': d['isReserve'] == 0}" ng-if="d['endStation'] == '燕巢' && jiangong" ng-click="book(d)">
-                <i class="ion-checkmark-round" ng-show="d['isReserve'] == 0"></i>
-                  到燕巢，發車: <p>{{ d['Time'] }}
-                  <span> ({{ d['reserveCount'] }} / {{ d['limitCount'] }}) </span></p>
-              </button>
-              <button class="button button-block" ng-class="{'button-assertive': d['isReserve'] == 0, 'button-balanced': d['isReserve'] == -1}" ng-if="d['endStation'] == '建工' && yanchao" ng-click="book(d)">
-                <i class="ion-checkmark-round" ng-show="d['isReserve'] == 0"></i>
-                到建工，發車: <p>{{ d['Time'] }}<span> ({{ d['reserveCount'] }} / {{ d['limitCount'] }}) </span></p>
-              </button>
+        <ion-content class="has-header" ng-init="init()">
+          <div class="page-wrapper" ng-show="!main.is_login" ng-init="get_today()">
+            <div class="spinner">
+              <div class="rect1"></div>
+              <div class="rect2"></div>
+              <div class="rect3"></div>
+              <div class="rect4"></div>
+              <div class="rect5"></div>
+            </div>
+            <div class="page-wrapper">
+              {{ quote }}
             </div>
           </div>
-        </div>
-      </div>
 
-      </div>
-    </div>
-    </ion-content>
+          <div class="page-wrapper" ng-show="main.is_login">
+            <div step-one>
+              <button class="button button-full button-stable" style="height:4em" ng-click="slideToggle()">選擇乘車時間 {{ date }} </button>
+              <div ng-show="collapsed">
+                <div pickadate style="width:90%;margin:0 auto;padding-bottom:5px;" ng-model="date" ng-attr-changeMonth="{{cm}}" ng-click="slideToggle(date)">
+                </div>
+              </div>
+            </div>
+
+            <div step-two class="bus-choice" ng-show='date && before_date'>
+              <button class="button button-positive button-full button-left" ng-click="change_src('j')">
+                從建工出發的車次
+              </button>
+              <button class="button button-balanced button-full button-right" ng-click="change_src('y')">
+                從燕巢出發的車次
+              </button>
+            </div>
+
+            <div ng-show="loading">
+              <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+              </div>
+            </div>
+
+            <div ng-show="!loading">
+              <div ng-show="no_bus" style="font-size:1.5em">
+                <p>本日無任何校車班次</p>
+                <p>請重新選擇日期.</p>
+              </div>
+
+              <div ng-show="!jiangong && !yanchao && data">
+                請點擊建工出發車次或是燕巢出發車次
+              </div>
+              <div step-three>
+                <div class="list bus-table">
+                  <div ng-repeat="d in data">
+                    <button class="button button-block button-positive " ng-class="{'button-assertive': d['isReserve'] == 0}" ng-if="d['endStation'] == '燕巢' && jiangong" ng-click="book(d)">
+                      <i class="ion-checkmark-round" ng-show="d['isReserve'] == 0"></i>
+                        到燕巢，發車: <p>{{ d['Time'] }}
+                        <span> ({{ d['reserveCount'] }} / {{ d['limitCount'] }}) </span></p>
+                    </button>
+                    <button class="button button-block" ng-class="{'button-assertive': d['isReserve'] == 0, 'button-balanced': d['isReserve'] == -1}" ng-if="d['endStation'] == '建工' && yanchao" ng-click="book(d)">
+                      <i class="ion-checkmark-round" ng-show="d['isReserve'] == 0"></i>
+                      到建工，發車: <p>{{ d['Time'] }}<span> ({{ d['reserveCount'] }} / {{ d['limitCount'] }}) </span></p>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            </div>
+          </div>
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab title="預約查詢" icon="fa fa-search" on-select="change_title('預約查詢')">
+        <ion-content class="has-header" ng-init="init()">
+          <!-- Spinner -->
+          <div class="page-wrapper" ng-show="!main.is_login">
+            <div class="spinner">
+              <div class="rect1"></div>
+              <div class="rect2"></div>
+              <div class="rect3"></div>
+              <div class="rect4"></div>
+              <div class="rect5"></div>
+            </div>
+            <div class="page-wrapper">
+              {{ quote }}
+            </div>
+          </div>
+
+          <!-- Reserve Querys-->
+          <div class="page-wrapper" ng-show="main.is_login" ng-init="reserve_query()">
+            <div ng-show="loading">
+              <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+              </div>
+            </div>
+
+            <div ng-show="!loading">
+              <div class="list bus-table" ng-if="reserve_data.length">
+                  <div ng-repeat="d in reserve_data">
+                    <button class="button button-block button-positive" ng-if="d['end'] == '燕巢'" >
+                      到燕巢，發車日期:<br/>
+                      <p>
+                        <font size="5em">{{ d['time'].split(" ")[0] }}</font>
+                        {{ d['time'].split(" ")[1] }}
+                      </p>
+                    </button>                    
+                    <button class="button button-block button-balanced" ng-if="d['end'] == '建工'">
+                      到建工，發車日期:<br/>
+                      <p>
+                        <font size="5em">{{ d['time'].split(" ")[0] }}</font>
+                        {{ d['time'].split(" ")[1] }}
+                      </p>
+                    </button>
+                  </div>            
+              </div>
+              <div ng-if="!reserve_data.length">
+                <div style="font-size:1.5em;margin-top:10px;">
+                  您還沒有預約任何校車喔
+                </div>
+                <img src="img/bus.jpg"></img>
+              </div>
+            </div>
+          </div>
+        </ion-content>
+      </ion-tab>
+      
+      <!-- 
+      <ion-tab title="違規查詢" icon="fa fa-ban">
+      </ion-tab>
+       -->
+    </ion-tabs>
 </ion-view>
